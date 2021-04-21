@@ -1,9 +1,15 @@
-import React from 'react'
-import logo from './logo.svg';
+import React from 'react';
 import './App.css';
 import CoinList from './components/CoinList/CoinList';
-import AccountBalance from './components/AccountBalance/AccountBalance'
+import AccountBalance from './components/AccountBalance/AccountBalance';
+import Header from './components/Header/Header';
+import styled from 'styled-components';
 
+const Content = styled.div`
+text-align: center;
+  background-color: rgb(82, 79, 79);
+  color: rgb(180, 178, 19);
+`;
 
 class App extends React.Component {
   constructor(props) {
@@ -42,16 +48,11 @@ class App extends React.Component {
   }
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} alt="React logo" className="App-logo" />
-          <h1 className="App-title">
-            Coin Exchange 
-          </h1>
-        </header>
+      <Content>
+        <Header />
         <AccountBalance amount = {this.state.balance} />
        <CoinList coinData={this.state.coinData} />
-      </div>
+      </Content>
     );
   }
   
