@@ -7,12 +7,8 @@ border: 1px solid;
     width: 25vh;
 `;
 export default class Coin extends Component {
-    constructor(props) {
-        super(props);
-        this.handleClick = this.handleClick.bind(this);
-    }
     
-    handleClick(event) {
+    handleClick = (event) => {
         // Prevent the default action of submitting the form
         event.preventDefault();
 
