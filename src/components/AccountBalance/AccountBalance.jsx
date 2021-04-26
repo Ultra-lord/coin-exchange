@@ -19,7 +19,7 @@ export default class AccountBalance extends Component {
         return (
             <Section>
              {content}  
-             <button onClick={this.balanceClick}>{buttonText}</button>
+             <button onClick={this.props.handleBalanceToggle}>{buttonText}</button>
             </Section>
         );
     }

@@ -15,6 +15,7 @@ class App extends React.Component {
     super(props);
     this.state = {
       balance: 10000,
+      showBalance: true,
       coinData: [
 
         {
@@ -50,6 +51,7 @@ class App extends React.Component {
       ]
     }
     this.handleRefresh = this.handleRefresh.bind(this);
+    this.handleBalanceToggle = this.handleBalanceToggle.bind(this);
   }
   handleRefresh(valueChangeTicker) {
    const newCoinData = this.state.coinData.map( function( {ticker, name, balance, price} ) {
@@ -70,12 +72,26 @@ class App extends React.Component {
       this.setState({ coinData: newCoinData });
      }
 
+     handleBalanceToggle() {
+       this.setState( function(oldState) {
+         return {
+           ...oldState,
+           showBalance: !oldState.showBalance
+         }
+
+       });
+     }
+
   render() {
     return (
       <Content>
         <Header />
-        <AccountBalance amount = {this.state.balance} showBalance={true} />
-       <CoinList coinData={this.state.coinData} handleRefresh={this.handleRefresh} />
+        <AccountBalance amount={this.state.balance}
+          showBalance={this.state.showBalance}
+          handleBalanceToggle={this.handleBalanceToggle} />
+       <CoinList coinData={this.state.coinData}
+        handleRefresh={this.handleRefresh}
+        showBalance={this.state.showBalance} />
       </Content>
     );
   }

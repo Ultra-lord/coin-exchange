@@ -17,25 +17,14 @@ export default class Coin extends Component {
         event.preventDefault();
 
         this.props.handleRefresh(this.props.ticker);
-/*
-        const randomPercentage = 0.995 + Math.random() * 0.01;
-        this.setState( function(oldState) {
-            return {
-                price: oldState.price * randomPercentage
-            };
-        });
-        */
     }  
     render() {
-        const balance = this.props.showBalance ?
-        <CoinRow>{this.props.balance}</CoinRow> :
-        null;
         return (
             <tr>
               <CoinRow>{this.props.name}</CoinRow>
               <CoinRow>{this.props.ticker}</CoinRow>
               <CoinRow>{this.props.price}</CoinRow>
-              <CoinRow>${this.props.balance}</CoinRow>
+              {this.props.showBalance ? <CoinRow>${this.props.balance}</CoinRow> : null}
               <CoinRow>
                   <form action="#" method="POST">
                   <button onClick={this.handleClick}>Refresh</button>
