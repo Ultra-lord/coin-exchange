@@ -27,11 +27,15 @@ export default class Coin extends Component {
         */
     }  
     render() {
+        const balance = this.props.showBalance ?
+        <CoinRow>{this.props.balance}</CoinRow> :
+        null;
         return (
             <tr>
               <CoinRow>{this.props.name}</CoinRow>
               <CoinRow>{this.props.ticker}</CoinRow>
-              <CoinRow>${this.props.price}</CoinRow>
+              <CoinRow>{this.props.price}</CoinRow>
+              <CoinRow>${this.props.balance}</CoinRow>
               <CoinRow>
                   <form action="#" method="POST">
                   <button onClick={this.handleClick}>Refresh</button>
@@ -45,5 +49,6 @@ export default class Coin extends Component {
 Coin.propTypes = {
     name: PropTypes.string.isRequired,
     ticker: PropTypes.string.isRequired,
-    price: PropTypes.number.isRequired
+    price: PropTypes.number.isRequired,
+    balance: PropTypes.number.isRequired
 }

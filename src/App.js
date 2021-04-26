@@ -20,26 +20,31 @@ class App extends React.Component {
         {
           name: 'Bitcoin',
           ticker: 'Btc',
+          balance: 0.5,
           price: 9999.99
         },
         {
           name: 'Ethereum',
           ticker: 'Eth',
+          balance: 35,
           price: 2999.99
         },
         {
           name: 'Tether',
           ticker: 'USDT',
+          balance: 0.5,
           price: 1.0
         },
         {
           name: 'Ripple',
           ticker: 'XRP',
+          balance: 1000,
           price: 1.3
         },
         {
           name: 'Bitcoin Cash',
           ticker: 'BCH',
+          balance: 0,
           price: 298.99
         },
       ]
@@ -47,7 +52,7 @@ class App extends React.Component {
     this.handleRefresh = this.handleRefresh.bind(this);
   }
   handleRefresh(valueChangeTicker) {
-   const newCoinData = this.state.coinData.map( function( {ticker, name, price} ) {
+   const newCoinData = this.state.coinData.map( function( {ticker, name, balance, price} ) {
      let newPrice = price;
     if (valueChangeTicker === ticker) {
       const randomPercentage = 0.995 + Math.random() * 0.01;
@@ -56,6 +61,7 @@ class App extends React.Component {
         return {
           ticker,
           name,
+          balance,
           price: newPrice
         }
 
