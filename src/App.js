@@ -51,25 +51,19 @@ class App extends React.Component {
       }, */
     ]
   }
-  componentDidMount = () => {
-    axios.get('https://api.coinpaprika.com/v1/coins')
-         .then( response => {
-           debugger;
-          let coinData = response.data.slice(0, COIN_COUNT).map(function(coin) {
-            return {
-               key: coin.id,
-               name: coin.name,
-               ticker: coin.symbol,
-               balance: 0,
-               price: 0,
-            };
-          });
-          console.log("Setting the state... ");
-          this.setState({ coinData });
-          console.log("Done setting state");
-         });
-      console.log("ComponentDidMount is DONE");
-      debugger;
+  componentDidMount = async () => {
+  let response = await axios.get('https://api.coinpaprika.com/v1/coins');   
+  let coinData = response.data.slice(0, COIN_COUNT).map(function(coin) {
+    return {
+        key: coin.id,
+        name: coin.name,
+        ticker: coin.symbol,
+        balance: 0,
+        price: 0,
+    };
+  });
+  // Retrieve the prices
+  this.setState({ coinData });     
   }
 
   handleRefresh = (valueChangeTicker) => {
