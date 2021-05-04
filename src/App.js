@@ -3,6 +3,7 @@ import CoinList from './components/CoinList/CoinList';
 import AccountBalance from './components/AccountBalance/AccountBalance';
 import Header from './components/Header/Header';
 import styled from 'styled-components';
+import axios from 'axios';
 
 const Content = styled.div`
 text-align: center;
@@ -10,12 +11,14 @@ text-align: center;
   color: rgb(180, 178, 19);
 `;
 
+const COIN_COUNT = 10;
+
 class App extends React.Component {
   state = {
     balance: 10000,
     showBalance: true,
     coinData: [
-
+/*
       {
         name: 'Bitcoin',
         ticker: 'Btc',
@@ -45,8 +48,28 @@ class App extends React.Component {
         ticker: 'BCH',
         balance: 0,
         price: 298.99
-      },
+      }, */
     ]
+  }
+  componentDidMount = () => {
+    axios.get('https://api.coinpaprika.com/v1/coins')
+         .then( response => {
+           debugger;
+          let coinData = response.data.slice(0, COIN_COUNT).map(function(coin) {
+            return {
+               key: coin.id,
+               name: coin.name,
+               ticker: coin.symbol,
+               balance: 0,
+               price: 0,
+            };
+          });
+          console.log("Setting the state... ");
+          this.setState({ coinData });
+          console.log("Done setting state");
+         });
+      console.log("ComponentDidMount is DONE");
+      debugger;
   }
 
   handleRefresh = (valueChangeTicker) => {
