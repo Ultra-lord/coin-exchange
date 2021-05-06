@@ -12,6 +12,7 @@ text-align: center;
 `;
 
 const COIN_COUNT = 10;
+const tickerUrl = 'https://api.coinpaprika.com/v1/tickers/';
 
 class App extends React.Component {
   state = {
@@ -55,7 +56,7 @@ class App extends React.Component {
 
   const response = await axios.get('https://api.coinpaprika.com/v1/coins');
   const coinIds = response.data.slice(0, COIN_COUNT).map(coin => coin.id);
-  const tickerUrl = 'https://api.coinpaprika.com/v1/tickers/';
+  
   const promises = coinIds.map(id => axios.get(tickerUrl + id));
   const coinData = await Promise.all(promises);   
   const coinPriceData = coinData.map(function(response) {
@@ -72,19 +73,18 @@ class App extends React.Component {
   this.setState({ coinData: coinPriceData });     
   }
 
-  handleRefresh = (valueChangeTicker) => {
-   const newCoinData = this.state.coinData.map( function(  values  ) {
-     let newValues = { ...values } ;
-    if (valueChangeTicker === values.ticker) {
-      const randomPercentage = 0.995 + Math.random() * 0.01;
-      newValues.price *= randomPercentage;
-        }
-        return newValues;
-
-      });
-      
-      this.setState({ coinData: newCoinData });
-     }
+  handleRefresh = async (valueChangeId) => {
+    let response = await axios.get(tickerUrl + valueChangeId);
+    const refreshedData = response.data;
+    const newCoinData = this.state.coinData.map( function( values ) {
+      let newValues = {...values};
+      if (valueChangeId === values.key) {
+        newValues.price = parseFloat(Number(refreshedData.quotes['USD'].price).toFixed(2));
+      }
+      return newValues;
+    });
+    this.setState({ coinData: newCoinData });
+  }
 
      handleBalanceToggle = () => {
        this.setState( function(oldState) {
