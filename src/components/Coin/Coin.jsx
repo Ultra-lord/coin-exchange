@@ -12,7 +12,7 @@ export default class Coin extends Component {
         // Prevent the default action of submitting the form
         event.preventDefault();
 
-        this.props.handleRefresh(this.props.id);
+        this.props.handleRefresh(this.props.tickerId);
     }  
     render() {
         return (
