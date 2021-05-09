@@ -19,6 +19,7 @@ export default function AccountBalance(props) {
         <Section>
             {content}  
             <button onClick={props.handleBalanceToggle}>{buttonText}</button>
+            <button onClick={props.handleAddBalance} >Add $1200</button>
         </Section>
     );
 

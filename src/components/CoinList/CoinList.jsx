@@ -26,6 +26,7 @@ export default function CoinList(props) {
       <Coin key={key} 
       tickerId={key}
       handleRefresh={props.handleRefresh} 
+      handleAddBalance={props.handleAddBalance}
       name={name} 
       ticker={ticker} 
       showBalance={props.showBalance}

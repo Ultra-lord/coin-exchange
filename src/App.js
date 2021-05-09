@@ -16,7 +16,7 @@ const formatPrice = price => parseFloat(Number(price).toFixed(4));
 
 
 function App(props) {
-  const [balance, setBalance] = useState(10000);
+  let [balance, setBalance] = useState(10000);
   const [showBalance, setShowBalance] = useState(true)
   const [coinData, setCoinData] = useState([]); 
 
@@ -65,16 +65,21 @@ const componentDidMount = async () => {
        setShowBalance(oldValue => !oldValue);
      }
 
-  
+     const handleAddBalance = () => {
+      setBalance(balance += 1200);
+   }
+
     return (
       <Content>
         <Header />
         <AccountBalance amount={balance}
           showBalance={showBalance}
-          handleBalanceToggle={handleBalanceToggle} />
+          handleBalanceToggle={handleBalanceToggle} 
+          handleAddBalance={handleAddBalance}/>
        <CoinList coinData={coinData}
         handleRefresh={handleRefresh}
-        showBalance={showBalance} />
+        showBalance={showBalance}
+        handleAddBalance={handleAddBalance} />
       </Content>
     );
   
