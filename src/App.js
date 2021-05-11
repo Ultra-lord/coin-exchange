@@ -5,6 +5,11 @@ import Header from './components/Header/Header';
 import styled from 'styled-components';
 import axios from 'axios';
 
+//import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootswatch/dist/vapor/bootstrap.min.css';
+
+import '@fortawesome/fontawesome-free/js/all';
+
 const Content = styled.div`
 text-align: center;
   background-color: rgb(82, 79, 79);
@@ -16,8 +21,8 @@ const formatPrice = price => parseFloat(Number(price).toFixed(4));
 
 
 function App(props) {
-  let [balance, setBalance] = useState(10000);
-  const [showBalance, setShowBalance] = useState(true)
+  const [balance, setBalance] = useState(10000);
+  const [showBalance, setShowBalance] = useState(false)
   const [coinData, setCoinData] = useState([]); 
 
 const componentDidMount = async () => {
@@ -61,12 +66,25 @@ const componentDidMount = async () => {
     setCoinData(newCoinData);
   }
 
+  const handleTransaction = (isBuy, valueChangeId) => {
+    var balanceChange = isBuy ? 1 : -1;
+    const newCoinData = coinData.map( function(values) {
+      let newValues = {...values};
+      if ( valueChangeId == values.key) {
+        newValues.balance += balanceChange;
+        setBalance( oldBalance => oldBalance - balanceChange * newValues.price );
+      }
+      return newValues;
+    });
+    setCoinData(newCoinData)
+  }
+
   const   handleBalanceToggle = () => {
        setShowBalance(oldValue => !oldValue);
      }
 
      const handleAddBalance = () => {
-      setBalance(balance += 1200);
+      setBalance( oldBalance => oldBalance + 1200 );
    }
 
     return (
@@ -78,6 +96,7 @@ const componentDidMount = async () => {
           handleAddBalance={handleAddBalance}/>
        <CoinList coinData={coinData}
         handleRefresh={handleRefresh}
+        handleTransaction={handleTransaction}
         showBalance={showBalance}
         handleAddBalance={handleAddBalance} />
       </Content>
